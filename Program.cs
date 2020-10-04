@@ -85,7 +85,7 @@ namespace WordGame
                         }
                     }
                 }
-                PrintColorMessage(ConsoleColor.Green, "Congrats! You beat the game. A true mastermind.");
+                PrintColorMessage(ConsoleColor.Green, "Congratulation! You won. A true mastermind.");
                 return;
 
             }
