@@ -27,7 +27,7 @@ namespace WordGame
                     }
                     else
                     {
-                        PrintColorMessage(ConsoleColor.DarkCyan, "Level: " + level);
+                        PrintColorMessage(ConsoleColor.DarkCyan, $"Level: {level}");
                     }
                     Console.WriteLine(scrambled_Word);
                     Console.Write("Answer: ");
@@ -47,7 +47,7 @@ namespace WordGame
                         PrintColorMessage(ConsoleColor.Red, "GAME OVER!");
                         Console.Write("Correct answer was: ");
                         PrintColorMessage(ConsoleColor.Cyan, words[i]);
-                        Console.WriteLine("You've reached level: " + level);
+                        Console.WriteLine($"You've reached level: {level}");
                         PrintColorMessage(ConsoleColor.DarkCyan, "Play Again? [Y or N]");
 
                         //Play again?
