@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
 
 namespace WordGame
 {
@@ -8,18 +6,9 @@ namespace WordGame
     {
         static void Main(string[] args)
         {
-            SqlConnection conn = new SqlConnection("Server=.\\SQLEXPRESS;Database=wordgame;Integrated Security=true");
-            conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT word FROM words", conn);
-            SqlDataReader reader = cmd.ExecuteReader();
-            List<string> results = new List<string>();
-            string[] rijeci;
-            while (reader.Read()) {
-               results.Add((string)reader["word"]);
-            }
-            rijeci = results.ToArray();
-            reader.Close();
-            conn.Close();
+            var dbService = new DbService();
+
+            var words = dbService.GetWords().ToArray();
          
             PrintColorMessage(ConsoleColor.Cyan, "GUESS THE WORD GAME");
 
