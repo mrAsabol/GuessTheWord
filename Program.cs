@@ -69,13 +69,12 @@ namespace WordGame
                         }
                     }
                 }
+                
                 PrintColorMessage(ConsoleColor.Green, "Congratulation! You won. A true mastermind.");
                 return;
-
             }
 
-
-        string ScrambleWord(string word)
+            string ScrambleWord(string word)
             {
                 char[] chars = new char[word.Length];
                 Random rand = new Random(10000);
@@ -90,7 +89,6 @@ namespace WordGame
                 return new String(chars);
             }
 
-
             // Color
             void PrintColorMessage(ConsoleColor color, string message)
             {
@@ -99,7 +97,6 @@ namespace WordGame
                 Console.ResetColor();
             }
         }
-
     }
 }
 
