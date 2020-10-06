@@ -28,11 +28,11 @@ namespace WordGame
 
             while (true)
             {
-                while (i < rijeci.Length)
+                while (i < words.Length)
                 {
-                    string scrambled_Word = ScrambleWord(rijeci[i]);
+                    string scrambled_Word = ScrambleWord(words[i]);
 
-                    if (level == rijeci.Length)
+                    if (level == words.Length)
                     {
                         PrintColorMessage(ConsoleColor.DarkCyan, "FINAL LEVEL!");
                     }
@@ -45,7 +45,7 @@ namespace WordGame
                     string answer = Console.ReadLine();
 
 
-                    if (answer == rijeci[i])
+                    if (answer == words[i])
                     {
                         PrintColorMessage(ConsoleColor.Green, "CORRECT!");
                         level++;
@@ -57,7 +57,7 @@ namespace WordGame
                         PrintColorMessage(ConsoleColor.Red, "WRONG!");
                         PrintColorMessage(ConsoleColor.Red, "GAME OVER!");
                         Console.Write("Correct answer was: ");
-                        PrintColorMessage(ConsoleColor.Cyan, rijeci[i]);
+                        PrintColorMessage(ConsoleColor.Cyan, words[i]);
                         Console.WriteLine("You've reached level: " + level);
                         PrintColorMessage(ConsoleColor.DarkCyan, "Play Again? [Y or N]");
 
