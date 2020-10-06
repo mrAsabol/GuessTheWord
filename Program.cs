@@ -1,11 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WordGame
 {
@@ -13,58 +6,48 @@ namespace WordGame
     {
         static void Main(string[] args)
         {
-            SqlConnection conn = new SqlConnection("Server=.\\SQLEXPRESS;Database=wordgame;Integrated Security=true");
-            conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT word FROM words", conn);
-            SqlDataReader reader = cmd.ExecuteReader();
-            List<string> results = new List<string>();
-            string[] rijeci;
-            while (reader.Read()) {
-               results.Add((string)reader["word"]);
-            }
-            rijeci = results.ToArray();
-            reader.Close();
-            conn.Close();
+            var dbService = new DbService();
+            var words = dbService.GetWords().ToArray();
          
-            PrintColorMessage(ConsoleColor.Cyan, "GUESS THE WORD GAME");
+            Helpers.PrintColorMessage(ConsoleColor.Cyan, "GUESS THE WORD GAME");
 
             int level = 1;
             int i = 0;
 
             while (true)
             {
-                while (i < rijeci.Length)
+                while (i < words.Length)
                 {
-                    string scrambled_Word = ScrambleWord(rijeci[i]);
+                    string scrambled_Word = Helpers.ScrambleWord(words[i]);
 
-                    if (level == rijeci.Length)
+                    if (level == words.Length)
                     {
-                        PrintColorMessage(ConsoleColor.DarkCyan, "FINAL LEVEL!");
+                        Helpers.PrintColorMessage(ConsoleColor.DarkCyan, "FINAL LEVEL!");
                     }
                     else
                     {
-                        PrintColorMessage(ConsoleColor.DarkCyan, "Level: " + level);
+                        Helpers.PrintColorMessage(ConsoleColor.DarkCyan, $"Level: {level}");
                     }
                     Console.WriteLine(scrambled_Word);
                     Console.Write("Answer: ");
                     string answer = Console.ReadLine();
 
 
-                    if (answer == rijeci[i])
+                    if (answer == words[i])
                     {
-                        PrintColorMessage(ConsoleColor.Green, "CORRECT!");
+                        Helpers.PrintColorMessage(ConsoleColor.Green, "CORRECT!");
                         level++;
                         i++;
 
                     }
                     else
                     {
-                        PrintColorMessage(ConsoleColor.Red, "WRONG!");
-                        PrintColorMessage(ConsoleColor.Red, "GAME OVER!");
+                        Helpers.PrintColorMessage(ConsoleColor.Red, "WRONG!");
+                        Helpers.PrintColorMessage(ConsoleColor.Red, "GAME OVER!");
                         Console.Write("Correct answer was: ");
-                        PrintColorMessage(ConsoleColor.Cyan, rijeci[i]);
-                        Console.WriteLine("You've reached level: " + level);
-                        PrintColorMessage(ConsoleColor.DarkCyan, "Play Again? [Y or N]");
+                        Helpers.PrintColorMessage(ConsoleColor.Cyan, words[i]);
+                        Console.WriteLine($"You've reached level: {level}");
+                        Helpers.PrintColorMessage(ConsoleColor.DarkCyan, "Play Again? [Y or N]");
 
                         //Play again?
                         string playAgain = Console.ReadLine().ToUpper();
@@ -85,37 +68,11 @@ namespace WordGame
                         }
                     }
                 }
-                PrintColorMessage(ConsoleColor.Green, "Congratulation! You won. A true mastermind.");
+
+                Helpers.PrintColorMessage(ConsoleColor.Green, "Congratulation! You won. A true mastermind.");
                 return;
-
-            }
-
-
-        string ScrambleWord(string word)
-            {
-                char[] chars = new char[word.Length];
-                Random rand = new Random(10000);
-                int index = 0;
-                while (word.Length > 0)
-                {
-                    int next = rand.Next(0, word.Length - 1);
-                    chars[index] = word[next];
-                    word = word.Substring(0, next) + word.Substring(next + 1);
-                    ++index;
-                }
-                return new String(chars);
-            }
-
-
-            // Color
-            void PrintColorMessage(ConsoleColor color, string message)
-            {
-                Console.ForegroundColor = color;
-                Console.WriteLine(message);
-                Console.ResetColor();
             }
         }
-
     }
 }
 
